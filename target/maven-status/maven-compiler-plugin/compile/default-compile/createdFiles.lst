@@ -1,0 +1,9 @@
+com\moviegen\config\WebConfig.class
+com\moviegen\controller\TestController.class
+com\moviegen\repository\MovieRepository.class
+com\moviegen\config\AppConfig.class
+com\moviegen\config\CacheConfig.class
+com\moviegen\controller\MovieController.class
+com\moviegen\MovieGenreApplication.class
+com\moviegen\service\MovieService.class
+com\moviegen\model\Movie.class
