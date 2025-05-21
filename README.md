@@ -59,9 +59,9 @@ movieGEN/
 │   ├── mlb.pkl          # Multi-label binarizer
 │   └── movies.csv       # Training dataset
 │
-├── frontend/            # React Frontend
+├── frontend/            # Angular Frontend
 │   ├── src/
-│   │   ├── components/  # React components
+│   │   ├── components/  # Angular components
 │   │   ├── services/    # API services
 │   │   └── App.tsx      # Main application
 │   └── package.json     # Dependencies
