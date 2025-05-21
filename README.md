@@ -43,7 +43,7 @@ This project uses the IMDB Movie Dataset (2023-1951) curated by Deven Bhagtani. 
 - **joblib**: Model persistence
 
 ### Frontend
-- **React**: Frontend framework
+- **Angular**: Frontend framework
 - **TypeScript**: Type-safe JavaScript
 - **Tailwind CSS**: Utility-first CSS framework
 - **Axios**: HTTP client
