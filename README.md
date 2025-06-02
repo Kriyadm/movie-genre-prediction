@@ -1,171 +1,124 @@
-# Movie Genre Prediction System
+# Movie Genre Prediction & Recommendation System
 
-A machine learning-based system that predicts movie genres based on movie descriptions. The system uses natural language processing and multi-label classification to identify multiple genres for a given movie.
+[![Build Status](https://github.com/Kriyadm/movie-genre-prediction/actions/workflows/ci.yml/badge.svg)](https://github.com/Kriyadm/movie-genre-prediction/actions)
 
-## Dataset
-
-This project uses the IMDB Movie Dataset (2023-1951) curated by Deven Bhagtani. The dataset contains comprehensive information about Indian movies including:
-- Movie titles and descriptions
-- Release years
-- Genres
-- Cast and crew information
-- Plot summaries
-
-### Citation
-```bibtex
-@misc{yourusername/movie-dataset-2023,
-  author = {Deven Bhagtani},
-  title = {IMDB Movie Dataset(2023-1951)},
-  year = {2023},
-  publisher = {GitHub},
-  journal = {GitHub repository},
-  howpublished = {\url{https://github.com/devensinghbhagtani/Bollywood-Movie-Dataset}},
-}
-```
+A machine learning-based system that predicts movie genres based on movie descriptions **and** recommends movies based on your input! Features a dynamic UI built with Angular.
 
 ## Features
-
-- Predicts multiple genres for a movie based on its description
-- RESTful API for easy integration
-- Real-time predictions
-- Support for Indian and international movies
-- High accuracy for genre prediction
-- Easy to use and integrate
-
-## Tech Stack
-
-### Backend
-- **FastAPI**: Modern, fast web framework for building APIs
-- **Python**: Core programming language
-- **scikit-learn**: Machine learning library
-- **pandas**: Data manipulation and analysis
-- **numpy**: Numerical computing
-- **joblib**: Model persistence
-
-### Frontend
-- **Angular**: Frontend framework
-- **TypeScript**: Type-safe JavaScript
-- **Tailwind CSS**: Utility-first CSS framework
-- **Axios**: HTTP client
+- 🎬 **Genre Prediction:** Predicts multiple genres for a movie based on its description
+- 🤖 **Movie Recommendation:** Suggests similar movies by name, description, or genre
+- 🖥️ **Modern UI:** Built with Angular & Tailwind CSS
+- 🚀 **RESTful API:** FastAPI backend for predictions and recommendations
 
 ## Project Structure
-
 ```
-movieGEN/
-├── ml-service/           # Machine Learning Service
-│   ├── main.py          # FastAPI application
-│   ├── model.pkl        # Trained model
-│   ├── vectorizer.pkl   # Text vectorizer
-│   ├── mlb.pkl          # Multi-label binarizer
-│   └── movies.csv       # Training dataset
-│
-├── frontend/            # Angular Frontend
+movie-genre-prediction/
+├── ml-service/                # Machine Learning Backend (FastAPI)
+│   ├── main.py                # FastAPI app
+│   ├── recommender.py         # Recommendation logic
+│   ├── model.pkl              # Trained genre model
+│   ├── vectorizer.pkl         # Text vectorizer
+│   ├── mlb.pkl                # MultiLabelBinarizer
+│   ├── movies.csv             # Movie dataset
+│   ├── requirements.txt       # Backend dependencies
+│   └── ...
+├── movie-genre-frontend/      # Angular Frontend
 │   ├── src/
-│   │   ├── components/  # Angular components
-│   │   ├── services/    # API services
-│   │   └── App.tsx      # Main application
-│   └── package.json     # Dependencies
-│
-└── README.md           # Project documentation
+│   ├── package.json
+│   └── ...
+├── README.md
+└── ...
 ```
 
-## Setup and Installation
+## Setup & Installation
 
 ### Prerequisites
 - Python 3.8+
 - Node.js 14+
-- npm or yarn
+- npm
 
-### Backend Setup
-1. Navigate to the ml-service directory:
-   ```bash
-   cd movieGEN/ml-service
-   ```
+### Backend (FastAPI)
+```bash
+cd ml-service
+python -m venv venv
+venv\Scripts\activate  # On Windows
+pip install -r requirements.txt
+uvicorn main:app --reload
+```
 
-2. Create a virtual environment:
-   ```bash
-   python -m venv venv
-   source venv/bin/activate  # On Windows: venv\Scripts\activate
-   ```
+### Frontend (Angular)
+```bash
+cd movie-genre-frontend
+npm install
+npm start
+```
 
-3. Install dependencies:
-   ```bash
-   pip install -r requirements.txt
-   ```
-
-4. Start the FastAPI server:
-   ```bash
-   uvicorn main:app --reload
-   ```
-
-### Frontend Setup
-1. Navigate to the frontend directory:
-   ```bash
-   cd movieGEN/frontend
-   ```
-
-2. Install dependencies:
-   ```bash
-   npm install
-   ```
-
-3. Start the development server:
-   ```bash
-   npm start
-   ```
-
-## API Documentation
+## API Usage
 
 ### Predict Genre
-- **Endpoint**: `/predict`
-- **Method**: POST
-- **Request Body**:
-  ```json
+- **POST** `/predict`
+- **Body:**
+```json
+{
+  "name": "Movie Name",
+  "description": "Movie Description"
+}
+```
+- **Response:**
+```json
+{
+  "name": "Movie Name",
+  "description": "Movie Description",
+  "predictedGenre": "Genre1, Genre2, ..."
+}
+```
+
+### Get Recommendations
+- **POST** `/recommend`
+- **Body:** (any of the following)
+```json
+{
+  "movie_name": "Jailer",
+  "num_recommendations": 5
+}
+```
+```json
+{
+  "description": "A retired jailer fights crime...",
+  "num_recommendations": 5
+}
+```
+```json
+{
+  "genre": "Action",
+  "num_recommendations": 5
+}
+```
+- **Response:**
+```json
+[
   {
-    "name": "Movie Name",
-    "description": "Movie Description"
-  }
-  ```
-- **Response**:
-  ```json
-  {
-    "name": "Movie Name",
-    "description": "Movie Description",
-    "predictedGenre": "Genre1, Genre2, Genre3"
-  }
-  ```
-
-## Model Details
-
-The system uses a multi-label classification approach:
-1. Text preprocessing and vectorization
-2. Multi-label classification using scikit-learn
-3. Genre prediction with probability thresholds
-
-### Dataset Statistics
-- Total Movies: 2,201
-- Year Range: 1951-2023
-- Primary Genres: Action, Drama, Comedy, Romance, Thriller
-- Average Genres per Movie: 2.5
+    "movie_name": "Jawan",
+    "genre": "Action, Thriller",
+    "overview": "A man fights for justice..."
+  },
+  ...
+]
+```
 
 ## Contributing
-
 1. Fork the repository
 2. Create a feature branch
 3. Commit your changes
-4. Push to the branch
+4. Push to your branch
 5. Create a Pull Request
 
 ## License
-
-This project is licensed under the MIT License - see the LICENSE file for details.
+MIT License. See [LICENSE](LICENSE).
 
 ## Acknowledgments
-
-- Dataset sourced from [IMDB Movie Dataset (2023-1951)](https://github.com/devensinghbhagtani/Bollywood-Movie-Dataset) by Deven Bhagtani
-- Built with modern web technologies
-- Inspired by the need for automated genre classification
+- Dataset: IMDB Movie Dataset (2023-1951) by Deven Bhagtani
+- Built with FastAPI, scikit-learn, Angular, and Tailwind CSS
 
 ## Contact
-
-For any queries or support, please open an issue in the repository. 
+For queries or support, open an issue in the repository. 
